@@ -1,82 +1,221 @@
-# PrepWise AI
+# PrepWise AI – Smart Study Planner
 
-PrepWise AI is a Next.js study-planning app that generates day-wise exam preparation plans from a subject, topic list, and exam date. Generated plans are created with Groq and saved to Supabase so they can be reviewed later.
+PrepWise AI is an AI-powered study planner that helps students create personalized study schedules based on their subject, topics, and exam date. The application uses Groq AI to generate customized study plans and stores them in Supabase for future access.
+
+## Live Demo
+
+**Deployed Application:**
+https://prep-wise-ai-delta.vercel.app
 
 ## Features
 
-- Generate personalized study plans from a simple form
-- Create day-wise schedules based on an exam date
-- Save generated plans in Supabase
-- View saved study plans on the `/plans` page
-- Built with Next.js App Router, TypeScript, Tailwind CSS, Groq, and Supabase
+* Generate AI-powered study schedules
+* Personalized study plans based on exam date
+* Store generated plans in Supabase database
+* View previously saved study plans
+* Responsive and clean user interface
+* Full-stack implementation using Next.js
+* Cloud deployment using Vercel
 
 ## Tech Stack
 
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS
-- Groq SDK
-- Supabase
+### Frontend
 
-## Getting Started
+* Next.js 16
+* React
+* Tailwind CSS
 
-Install dependencies:
+### Backend
+
+* Next.js API Routes
+
+### Database
+
+* Supabase
+
+### AI Integration
+
+* Groq API
+* Llama 3.3 70B Versatile Model
+
+### Deployment
+
+* Vercel
+
+## Project Structure
+
+```text
+prepwise-ai/
+│
+├── app/
+│   ├── api/
+│   │   └── generate/
+│   │       └── route.ts
+│   │
+│   ├── plans/
+│   │   └── page.tsx
+│   │
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+│
+├── components/
+│   └── StudyForm.tsx
+│
+├── lib/
+│   ├── groq.ts
+│   └── supabase.ts
+│
+├── public/
+│
+├── .env.local
+├── package.json
+└── README.md
+```
+
+## How It Works
+
+1. User enters:
+
+   * Subject
+   * Topics
+   * Exam Date
+
+2. Form data is sent to the API route.
+
+3. Groq AI generates a personalized study schedule.
+
+4. The generated plan is displayed to the user.
+
+5. The study plan is automatically stored in Supabase.
+
+6. Users can view all previously saved plans on the Plans page.
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone <your-repository-url>
+cd prepwise-ai
+```
+
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-Create a `.env.local` file in the project root and add:
+### Create Environment Variables
+
+Create a `.env.local` file in the root directory:
 
 ```env
 GROQ_API_KEY=your_groq_api_key
+
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-Run the development server:
+### Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000` in your browser.
+Open:
 
-## Supabase Setup
+```text
+http://localhost:3000
+```
 
-Create a `study_plans` table with columns that match the app insert and read flow:
+## Supabase Database Schema
 
 ```sql
 create table study_plans (
-  id uuid primary key default gen_random_uuid(),
+  id bigint generated always as identity primary key,
   subject text not null,
   topics text not null,
-  exam_date date not null,
-  generated_plan text,
-  created_at timestamp with time zone default now()
+  exam_date text not null,
+  generated_plan text not null,
+  created_at timestamp default now()
 );
 ```
 
-## Available Scripts
+## API Endpoint
 
-```bash
-npm run dev
-npm run build
-npm run start
-npm run lint
+### Generate Study Plan
+
+```http
+POST /api/generate
 ```
 
-## Project Structure
+#### Request Body
 
-```text
-app/
-  api/generate/route.ts   API route for generating and saving plans
-  page.tsx                Home page with the study plan form
-  plans/page.tsx          Saved plans page
-components/
-  StudyForm.tsx           Client-side form for plan generation
-lib/
-  groq.ts                 Groq client
-  supabase.ts             Supabase client
+```json
+{
+  "subject": "Mathematics",
+  "topics": "Differentiation, Integration",
+  "examDate": "2026-07-15"
+}
 ```
+
+#### Response
+
+```json
+{
+  "plan": "Generated study schedule..."
+}
+```
+
+## Learning Outcomes
+
+This project helped in understanding:
+
+* Next.js App Router
+* API Route Development
+* React State Management
+* Tailwind CSS Styling
+* AI Integration using Groq
+* Database Operations with Supabase
+* Full-Stack Development
+* Cloud Deployment with Vercel
+* Environment Variable Management
+
+## Future Improvements
+
+* User Authentication
+* Edit Study Plans
+* Delete Study Plans
+* Progress Tracking
+* Study Reminders
+* PDF Export
+* Dark Mode
+* Multi-Subject Planning
+
+## Screenshots
+
+### Home Page
+
+(Add Screenshot)
+
+### Generated Study Plan
+
+(Add Screenshot)
+
+### Saved Plans Page
+
+(Add Screenshot)
+
+### Supabase Database
+
+(Add Screenshot)
+
+## Author
+
+**Aryan Bharti**
+
+## License
+
+This project is developed for educational and learning purposes.
